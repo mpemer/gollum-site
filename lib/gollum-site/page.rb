@@ -2,10 +2,7 @@ module Gollum
   class SitePage < Gollum::Page
     # Add ".html" extension to page links
     def self.cname(name)
-      cname = name.respond_to?(:gsub)      ?
-      name.gsub(%r{[ /<>]}, '-') :
-        ''
-
+      cname = name
       # account for anchor links (e.g. Page#anchor)
       if pos = cname.index('#')
         cname[0..(pos-1)] + '.html' + cname[pos..-1]

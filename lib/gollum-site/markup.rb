@@ -11,7 +11,7 @@ module Gollum
     #   if it is not.
     def process_page_link_tag(tag, no_follow = false)
       parts = tag.split('|')
-      name  = parts[0].strip
+      name = parts[0].strip
       cname = @wiki.page_class.cname((parts[1] || parts[0]).strip)
       if pos = cname.index('#')
         extra = cname[pos..-1]
@@ -20,15 +20,9 @@ module Gollum
       tag = if name =~ %r{^https?://} && parts[1].nil?
         %{<a href="#{name}">#{name}</a>}
       else
-        presence    = "absent"
-        link_name   = cname
         page = find_page_from_name(cname)
-        if page
-          # Update link_name to account for case sensitivity
-          link_name = @wiki.page_class.cname(page.name)
-          presence  = "present"
-        end
-        link = ::File.join(@wiki.base_path, CGI.escape(link_name))
+        presence = page ? "present" : "absent"
+        link = ::File.join(@wiki.base_path, CGI.escape(cname))
         %{<a class="internal #{presence}" href="#{link}#{extra}">#{name}</a>}
       end
       if tag && no_follow
