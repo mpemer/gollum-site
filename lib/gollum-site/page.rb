@@ -53,7 +53,9 @@ module Gollum
                formatted_data
              end
 
-      ::File.open(::File.join(output_path, self.class.cname(name)), 'w') do |f|
+      page_path = ::File.join(output_path, ::File.dirname(path))
+      ::Dir.mkdir(page_path) unless ::File.exists? page_path
+      ::File.open(::File.join(page_path, self.class.cname(name)), 'w') do |f|
         f.write(data)
       end
     end
